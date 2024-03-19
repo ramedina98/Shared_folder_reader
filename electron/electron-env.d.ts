@@ -23,5 +23,13 @@ declare namespace NodeJS {
 
 // Used in Renderer process, expose in `preload.ts`
 interface Window {
-  ipcRenderer: import('electron').IpcRenderer
+  // Renderer process communication
+  ipcRenderer: import('electron').IpcRenderer;
+  // Expose Electron API to the renderer process
+  electronAPI: {
+    // Function to retrieve files from a folder
+    getFiles: (folderPath: string) => Promise<string[]>;
+    // Function to open a file using its file path
+    openFile: (filePath: string) => void;
+  };
 }

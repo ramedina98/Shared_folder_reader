@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
+var fs = require('fs');
 
 // The built directory structure
 //
@@ -26,6 +27,10 @@ function createWindow() {
     minWidth: 450, 
     minHeight: 500,
     webPreferences: {
+      contextIsolation: true, 
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true,
+      nodeIntegrationInSubFrames: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
@@ -34,6 +39,18 @@ function createWindow() {
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
+
+  // Handle the 'get-files' IPC event in the main process
+  ipcMain.handle('get-files', async (_event, folderPath: string) => {
+    try {
+      // Read the files from the folder using fs.promises.readdir
+        const files = await fs.promises.readdir(folderPath);
+        return files;
+    } catch (error:any) {
+      // Throw an error if there's any issue reading the files
+        throw new Error(`Error al leer los archivos: ${error.message}`);
+    }
+  });
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)

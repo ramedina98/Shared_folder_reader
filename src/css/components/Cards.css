@@ -1,0 +1,39 @@
+.card_conteiner{
+    background-color: var(--bg-input);
+    border-radius: 0.5em;
+    width: 290px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 1.2em;
+}
+.card_conteiner:hover{
+    transition: all 20ms ease-in-out;
+    background-color: var(--bg-input-hover);
+}
+.card_conteiner figure{
+    width: 40%;
+    height: 100px;
+    padding-top: 0.9em;
+    border-right: 1px solid var(--txt-color-input);
+}
+.card_conteiner figure img{
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    object-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card_conteiner .name_container{
+    width: 60%;
+    height: auto;
+    text-align: center;
+    font-size: 1.35em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--txt-color-input);
+}

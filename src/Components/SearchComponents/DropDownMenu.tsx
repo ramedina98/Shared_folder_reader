@@ -1,20 +1,32 @@
 import { useState, CSSProperties } from 'react';
 import '../../css/components/DropDownMenu.css'
 
-//TODO: todabia falta que el drop down menu pueda realizar la busqueda dinamica...
-
 type DropDownMenuProps = {
     lis: string[];
-    menuStyle: CSSProperties
+    menuStyle: CSSProperties,
+    onSearch: (searchText: string) => void; 
 }
 
-function DropDownMenu({ lis, menuStyle }: DropDownMenuProps){
+function DropDownMenu({ lis, menuStyle, onSearch }: DropDownMenuProps){
 
-    //TODO: comentar el codigo para el drop down menu...
+    // State variables for managing the display of the dropdown menu and its name
     const [display, setDisplay] = useState<'block' | 'none'>('none');
+    const [dropName, setDropName] = useState<string>('Extension');
 
+    // Function to toggle the display of the dropdown menu
     const handleDisplay = () => {
+        // Toggle between 'block' and 'none' to show/hide the dropdown menu
         setDisplay(prevDisplay => (prevDisplay === 'block' ? 'none' : 'block'));
+    }
+
+    // Function to handle click on dropdown menu item
+    const heandleItemClick = (item: string) => {
+        // Call the onSearch function with the clicked item as argument
+        onSearch(item);
+        // Update the dropdown name to the clicked item
+        setDropName(item);
+        // Hide the dropdown menu after item click
+        setDisplay('none');
     }
 
     return (
@@ -23,7 +35,7 @@ function DropDownMenu({ lis, menuStyle }: DropDownMenuProps){
                 onClick={handleDisplay}
                 className='drop'
             >
-                Extension
+                {dropName}
             </div>
             <div 
                 style={{...menuStyle, display}}
@@ -33,6 +45,7 @@ function DropDownMenu({ lis, menuStyle }: DropDownMenuProps){
                     {lis.map((item: string, index: number) => (
                         <li
                             key={index}
+                            onClick={() => heandleItemClick(item)}
                         >
                             {item}
                         </li>

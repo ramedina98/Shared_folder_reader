@@ -1,7 +1,25 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, shell } from 'electron'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
+
+// Define an asynchronous function to fetch files from a folder using IPC
+async function getFilesFromFolder(folderPath: string): Promise<string[]> {
+  // Invoke the 'get-files' IPC event to retrieve files from the main process
+  try {
+      const files = await ipcRenderer.invoke('get-files', folderPath);
+      return files;
+  } catch (error:any) {
+    // Throw an error if there's any issue retrieving files
+      throw new Error(`Error al leer los archivos: ${error.message}`);
+  }
+}
+
+// Expose the 'getFiles' function and the 'openFile' function to the renderer process
+contextBridge.exposeInMainWorld('electronAPI', {
+  getFiles: getFilesFromFolder,
+  openFile: shell.openPath,
+});
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {
