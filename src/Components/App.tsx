@@ -2,6 +2,8 @@ import '../css/App.css';
 import '../css/colors.css';
 import Cards from './Cards';
 import Search from './Search';
+import CardSkeleton from '../Skeletons/CardSkeleton';
+import Logo from '../assets/img/logo.png';
 import { useState, useEffect } from 'react';
 
 
@@ -9,6 +11,7 @@ function App() {
 
   // Define a state variable to store the list of files retrieved from the folder
   const [files, setFiles] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); 
   // Retrieve the folder path from environment variables
   const path = import.meta.env.VITE_REACT_APP_FOLDER;
 
@@ -23,7 +26,7 @@ function App() {
     async function fetchFiles() {
       // Construct the folder path
       try {
-        const folderPath = path; 
+        const folderPath = path;
          // Call an Electron API function to get the list of files in the folder
         const files = await window.electronAPI.getFiles(folderPath);
         // Remove unwanted files from the list
@@ -33,6 +36,8 @@ function App() {
       } catch (error) {
         // Log an error message if there's an issue fetching the files
         console.error('Error al obtener los archivos:', error);
+      } finally{
+        setLoading(false);
       }
     }
 
@@ -54,6 +59,12 @@ function App() {
   return (
     <>
       <header>
+        <figure>
+          <img src={Logo} alt="Logo" />
+        </figure>
+        <div>
+          <span>Carpeta compartida</span>
+        </div>
       </header>
       <section>
         <Search onSearch={handleSearch}/>
@@ -66,14 +77,20 @@ function App() {
               />
             ))
           ) : (
-            files.map((item: string, index: number) => (
-              <Cards 
-                key={index}
-                documento={item}
-              />
-            ))
+            loading ? (
+              Array(8).fill(0).map((_item: any, index: number) => (
+                <CardSkeleton key={index} />
+              ))
+            ) : (
+              files.map((item: string, index: number) => (
+                <Cards 
+                  key={index}
+                  documento={item}
+                />
+              ))
+            )
           )}
-        </main>
+          </main>
       </section>
       <footer>
       </footer>

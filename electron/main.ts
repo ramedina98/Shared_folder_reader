@@ -21,7 +21,7 @@ const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
 function createWindow() {
   win = new BrowserWindow({
-    icon: path.join(process.env.VITE_PUBLIC, 'folder.webp'),
+    icon: path.join('../public/folder.icns'),
     width: 800, 
     height: 680, 
     minWidth: 450, 
@@ -32,6 +32,7 @@ function createWindow() {
       nodeIntegrationInWorker: true,
       nodeIntegrationInSubFrames: true,
       preload: path.join(__dirname, 'preload.js'),
+      webSecurity: false,
     },
   })
 

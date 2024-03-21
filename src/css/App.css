@@ -1,14 +1,37 @@
 /*Here we have the styles of the app component...*/
 header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1px;
   width: 100%;
   color: white;
   background-color: var(--main-color); 
-  padding: 1.2em 0;
+  padding: 0.9em 0;
   text-align: center;
   font-size: 1.7em;
   font-weight: 700;
   letter-spacing: 0.03em;
   border-bottom: 0.5px solid rgb(115, 107, 107);
+}
+
+header figure{
+  margin-left: 1em;
+  width: 70px;
+}
+header figure img{
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+header div{
+  margin-right: 1em;
+  color: var(--txt-color-input);
+  font-size: 1em;
+  letter-spacing: 0.03em;
+  font-weight: 600;
 }
 
 section{

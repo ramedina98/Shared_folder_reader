@@ -2,16 +2,16 @@ import { useState, CSSProperties } from 'react';
 import '../../css/components/DropDownMenu.css'
 
 type DropDownMenuProps = {
-    lis: string[];
+    list: string[];
     menuStyle: CSSProperties,
     onSearch: (searchText: string) => void; 
 }
 
-function DropDownMenu({ lis, menuStyle, onSearch }: DropDownMenuProps){
+function DropDownMenu({ list, menuStyle, onSearch }: DropDownMenuProps){
 
     // State variables for managing the display of the dropdown menu and its name
     const [display, setDisplay] = useState<'block' | 'none'>('none');
-    const [dropName, setDropName] = useState<string>('Extension');
+    const [dropName, setDropName] = useState<string>(list[0]);
 
     // Function to toggle the display of the dropdown menu
     const handleDisplay = () => {
@@ -42,7 +42,7 @@ function DropDownMenu({ lis, menuStyle, onSearch }: DropDownMenuProps){
                 className='menu'
             >
                 <ul>
-                    {lis.map((item: string, index: number) => (
+                    {list.map((item: string, index: number) => (
                         <li
                             key={index}
                             onClick={() => heandleItemClick(item)}
