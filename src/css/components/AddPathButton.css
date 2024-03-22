@@ -1,0 +1,26 @@
+.buttonAddPath{
+    width: 160px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--bg-input);
+    border: none;
+    border-radius: 0.3em;
+    padding: 1em;
+    margin-right: 1em;
+    cursor: pointer;
+}
+.buttonAddPath .contText_buttonAddPath{
+    color: var(--txt-color-input);
+    width: 80%;
+    font-size: 1.1em;
+    letter-spacing: 0.03em;
+}
+.buttonAddPath .contFigure{
+    width: 20%;
+}
+
+.buttonAddPath:hover{
+    transition: all 250ms ease-in-out;
+    background-color: var(--bg-input-hover);
+}

@@ -14,7 +14,7 @@ function Search({onSearch}:SearchProps) {
 
     /* This is a list of file extensions for word and excel files, it is 
     part of the component props...*/
-    const list = ['All file extension', '.docx', '.xlsx']
+    const list = ['All file extension', '.docx', '.xlsx', '.ppt', '.pdf'];
 
     // Define state variables to store the window width and height
     const [windowSize, setWindowSize] = useState({
@@ -50,7 +50,7 @@ function Search({onSearch}:SearchProps) {
                     list={list}
                     menuStyle={{
                         position: 'absolute',
-                        top: windowSize.width > 980 ? 200 : 260, 
+                        top: windowSize.width > 980 ? 260 : 325, 
                         right: windowSize.width > 980 ? 48 : 0,
                     }}
                     onSearch={onSearch}

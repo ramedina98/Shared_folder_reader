@@ -15,10 +15,36 @@ async function getFilesFromFolder(folderPath: string): Promise<string[]> {
   }
 }
 
+// Function to get the content of the 'paths.txt' file from the main process
+async function getPathsFileContent(): Promise<string> {
+  try {
+    // Invoke the 'get-paths-content' IPC event to retrieve the content
+    const content = await ipcRenderer.invoke('get-paths-content')
+    return content; // Return the content of the file
+  } catch (error: any) {
+    // Throw an error if there's any issue retrieving the content
+    throw new Error(`Error getting the content of the paths.txt file:  ${error.message}`)
+  }
+}
+
+// Function to update the content of the 'paths.txt' file in the main process
+async function updatePathsFileContent(content: string): Promise<string> {
+  try {
+    // Invoke the 'update-paths-content' IPC event to update the content
+    const result = await ipcRenderer.invoke('update-paths-content', content);
+    return result; // Return the result of the update operation
+  } catch (error: any) {
+    // Throw an error if there's any issue updating the content
+    throw new Error(`Error updating the content of paths.txt file: ${error.message}`);
+  }
+}
+
 // Expose the 'getFiles' function and the 'openFile' function to the renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
   getFiles: getFilesFromFolder,
+  getPathsContent: getPathsFileContent,
   openFile: shell.openPath,
+  updatePathsContent: updatePathsFileContent,
 });
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.

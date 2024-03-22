@@ -31,5 +31,9 @@ interface Window {
     getFiles: (folderPath: string) => Promise<string[]>;
     // Function to open a file using its file path
     openFile: (filePath: string) => void;
+    // Function to get the data in paths file...
+    getPathsContent: () => string; 
+    // Function to update the data...
+    updatePathsContent: (content: string) => Promise<string>;
   };
 }

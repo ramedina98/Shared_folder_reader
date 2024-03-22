@@ -14,7 +14,7 @@
     background-color: var(--bg-input-hover);
 }
 .card_conteiner figure{
-    width: 40%;
+    width: 35%;
     height: 100px;
     padding-top: 0.9em;
     border-right: 1px solid var(--txt-color-input);
@@ -29,11 +29,14 @@
     align-items: center;
 }
 .card_conteiner .name_container{
-    width: 60%;
+    width: 75%;
     height: auto;
     text-align: center;
-    font-size: 1.35em;
+    font-size: 1.1em;
     font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--txt-color-input);
+    overflow: hidden; /* Evita que el texto desborde del contenedor */
+    white-space: nowrap; /* Evita el retorno de línea */
+    text-overflow: ellipsis;
 }
