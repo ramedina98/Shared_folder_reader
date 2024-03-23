@@ -3,36 +3,23 @@ import ExcelImg from '../assets/img/excel.png';
 import WordImg from '../assets/img/word.png';
 import Power from '../assets/img/power.png';
 import Pdf from '../assets/img/pdf.png';
+import Folder from '../assets/img/folder.png';
+import Image from '../assets/img/img.png';
 //Agregar powerpoind y pdf...
 import '../css/components/Cards.css';
 import '../css/colors.css';
 
 type CardsTypes = {
     documento: string;
+    openFolder: (nameFolder: string) => void;
+    pathFolder: string,
 }
-function Cards({ documento }: CardsTypes) {
+function Cards({ documento, openFolder, pathFolder }: CardsTypes) {
 
     // State variable to manage the file extension
     const [extension, setExtention] = useState<string>('');
-    // Get the folder path from environment variables
-    const [content, setContent] = useState<string>('');
-
-    // This useEffect is to obtain the path to the folder required to work...
-    useEffect(() => {
-        async function fetchFiles() {
-          // Construct the folder path
-            try {
-                const content = await window.electronAPI.getPathsContent();
-                setContent(content);
-            } catch (error) {
-                // Log an error message if there's an issue fetching the files
-                console.error('Error when getting the files', error);
-            } 
-        }
-    
-        // Invoke the fetchFiles function when the component mounts
-        fetchFiles();
-    }, []);
+    // State variable to handle whether it is folder or not...
+    const [isFolder, setIsFolder] = useState<boolean>(false);
 
     // Function to check the file extension
     useEffect(() => {
@@ -41,19 +28,33 @@ function Cards({ documento }: CardsTypes) {
             const wordExtensions = ['.doc', '.docx', '.docm'];
             const powerpointExtensions = ['.ppt', '.pptx', '.pptm'];
             const pdfExtensions = ['.pdf'];
+            const imgExtensions = ['.png', '.jpg', '.jpeg','.ico', '.icns', '.webp', '.svg', '.gif'];
         
             const extension = fileName.slice(fileName.lastIndexOf('.')).toLowerCase();
-        
-            if (excelExtensions.includes(extension)) {
-                return 'excel';
-            } else if (wordExtensions.includes(extension)) {
-                return 'word';
-            } else if (powerpointExtensions.includes(extension)) {
-                return 'powerpoint';
-            } else if (pdfExtensions.includes(extension)) {
-                return 'pdf';
+
+            const lastDotIndex = fileName.lastIndexOf('.');
+            if (extension === '' || lastDotIndex === -1) {
+                setIsFolder(true);
+                return 'folder';
             }
         
+            if (excelExtensions.includes(extension)) {
+                setIsFolder(false);
+                return 'excel';
+            } else if (wordExtensions.includes(extension)) {
+                setIsFolder(false);
+                return 'word';
+            } else if (powerpointExtensions.includes(extension)) {
+                setIsFolder(false);
+                return 'powerpoint';
+            } else if (pdfExtensions.includes(extension)) {
+                setIsFolder(false);
+                return 'pdf';
+            } else if(imgExtensions.includes(extension)){
+                setIsFolder(false);
+                return 'image';
+            }
+            setIsFolder(false);
             return 'otro'; 
         }
 
@@ -64,19 +65,23 @@ function Cards({ documento }: CardsTypes) {
     // Function to open the file using Electron API
     const openFile = () => {
         // Construct the full file path
-        window.electronAPI.openFile(`${content}/${documento}`);
-    }
+        const filePath = `${pathFolder}/${documento}`;
 
-    //TODO: try...
-    const [_isHovered, setIsHovered] = useState<boolean>(false);
+        // Verifica si el documento es un directorio
+        if (isFolder) {
+            // Si es una carpeta, abre la carpeta utilizando la API de Electron
+            window.electronAPI.openFile(pathFolder);
+        } else {
+            // Si es un archivo, abre el archivo utilizando la API de Electron
+            window.electronAPI.openFile(filePath);
+        }
+    }
 
     return (
         <>
             <div 
-                onClick={openFile} 
+                onClick={isFolder ? () => openFolder(documento) : openFile} 
                 className="card_conteiner"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
             >
                 <figure>
                     {extension === 'excel' && (
@@ -90,6 +95,12 @@ function Cards({ documento }: CardsTypes) {
                     )}
                     {extension === 'pdf' && (
                         <img src={Pdf} alt="" />
+                    )}
+                    {extension === 'folder' && (
+                        <img src={Folder} alt="" />
+                    )}
+                    {extension === 'image' && (
+                        <img src={Image} alt="" />
                     )}
                 </figure>
                 <div className="name_container">

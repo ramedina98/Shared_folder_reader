@@ -10,7 +10,7 @@ import SearchBar from './SearchComponents/SearchBar';
 type SearchProps = {
     onSearch: (searchText: string) => void; 
 }
-function Search({onSearch}:SearchProps) {
+function Search({ onSearch }:SearchProps) {
 
     /* This is a list of file extensions for word and excel files, it is 
     part of the component props...*/

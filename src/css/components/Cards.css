@@ -36,7 +36,7 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--txt-color-input);
-    overflow: hidden; /* Evita que el texto desborde del contenedor */
-    white-space: nowrap; /* Evita el retorno de línea */
+    overflow: hidden; 
+    white-space: nowrap; 
     text-overflow: ellipsis;
 }

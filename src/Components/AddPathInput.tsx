@@ -59,7 +59,6 @@ function AddPathInput({ onClick }: AddPathInput){
         }
     }
 
-    //TODO: hacer validación...
     return (
         <>
             <div
