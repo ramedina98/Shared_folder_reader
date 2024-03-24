@@ -178,6 +178,7 @@ function App() {
     }
   }
 
+    console.log('Archivos filtrados: ', filteredFiles);
   return (
     <>
       {showPath && <AddPathInput onClick={handleCloseAddPath}/> }

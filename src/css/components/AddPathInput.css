@@ -26,19 +26,19 @@
     font-weight: 600;
     margin-bottom: 0.4em;
 }
-.cont_addpathinput .inputCont input:first-of-type{
-    width: 95%;
+.cont_addpathinput .inputCont input{
+    width: 100%;
     padding: 1em;
     border: none;
     border-radius: 0.3em;
     margin-bottom: 1em;
-    color: var(--bg-input-hover);
+    color: var(--txt-color-input);
     font-size: 0.9em;
     letter-spacing: 0.04em;
     outline: none;
 }
 .cont_addpathinput .inputCont .sendButton{
-    width: 95%;
+    width: 100%;
     padding: 0.8em;
     border: none;
     border-radius: 0.3em;
@@ -65,7 +65,7 @@
 }
 .cont_addpathinput .inputCont .currentPath_cont{
     border-top: 1px solid rgb(232, 232, 232);
-    width: 95%;
+    width: 100%;
     height: auto;
     margin-top: 0.4em;
     padding: 1.5em 0 0 1em;
