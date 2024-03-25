@@ -27,12 +27,13 @@
     margin-bottom: 0.4em;
 }
 .cont_addpathinput .inputCont input{
+    background-color: var(--txt-color-input);
     width: 100%;
     padding: 1em;
     border: none;
     border-radius: 0.3em;
     margin-bottom: 1em;
-    color: var(--txt-color-input);
+    color: var(--main-color);
     font-size: 0.9em;
     letter-spacing: 0.04em;
     outline: none;
