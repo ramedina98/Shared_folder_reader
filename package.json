@@ -1,5 +1,5 @@
 {
-  "name": "lector_carpeta_compartida",
+  "name": "path_finder",
   "private": false,
   "version": "1.0.0",
   "description": "This application is responsible for reading the files in the specified shared folder.",
